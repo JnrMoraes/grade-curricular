@@ -3,6 +3,7 @@ package br.cliente.escola.gradecurricular.controller;
 
 import br.cliente.escola.gradecurricular.entity.MateriaEntity;
 import br.cliente.escola.gradecurricular.repository.IMateriaRepository;
+import br.cliente.escola.gradecurricular.service.IMateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,9 @@ public class MateriaController {
     @Autowired
     private IMateriaRepository iMateriaRepository;
 
+    @Autowired
+    private IMateriaService materiaService;
+
 //    @GetMapping("/")
 //    public ResponseEntity<String> hellorWorldRest(){ // responde uma entidade do modelo string
 //        return ResponseEntity.status(HttpStatus.OK).body("Olá mundo Rest");
@@ -38,20 +42,14 @@ public class MateriaController {
         return ResponseEntity.status(HttpStatus.OK).body(this.iMateriaRepository.findAll());
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<MateriaEntity> consultaId(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<MateriaEntity> consultarMateria(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(this.iMateriaRepository.findById(id).get()); // chamo o Optiona e depois dou um get nele, ver o Sonar
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> excluirMateria(@PathVariable Long id){
-        try{
-            this.iMateriaRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(true);
-
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
-        }
+            return ResponseEntity.status(HttpStatus.OK).body(this.materiaService.excluir(id));
     }
 
     @PostMapping
@@ -66,24 +64,6 @@ public class MateriaController {
     }
 
     @PutMapping ResponseEntity<Boolean> atualizarMateria(@RequestBody MateriaEntity materiaEntity){
-        try{
-            // busca a materia que quero atualizar e guardo em uma variável
-          MateriaEntity materiaEntityAtualizada = this.iMateriaRepository.findById(materiaEntity.getId()).get();
-
-            // atualizo todos os valores
-            materiaEntityAtualizada.setNome(materiaEntity.getNome());
-            materiaEntityAtualizada.setCodigo(materiaEntity.getCodigo());
-            materiaEntityAtualizada.setHoras(materiaEntity.getHoras());
-            materiaEntityAtualizada.setFrequencia(materiaEntity.getFrequencia());
-
-            // salva as alterações feitas
-            this.iMateriaRepository.save(materiaEntityAtualizada);
-
-            return ResponseEntity.status(HttpStatus.OK).body(true);
-
-        } catch (Exception e){
-
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
-        }
+            return ResponseEntity.status(HttpStatus.OK).body(this.materiaService.atualizar(materiaEntity));
     }
 }
