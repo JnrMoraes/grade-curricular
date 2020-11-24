@@ -1,0 +1,14 @@
+ {
+        "id": 1,
+        "nome": "Introdução a linguagem de programação",
+        "horas": 68,
+        "codigo": "ILP456",
+        "frequencia": 2
+ }
+{
+    "id": 2,
+    "nome": "Programação Orientanda a Obejtos",
+    "horas": 68,
+    "codigo": "POO234",
+    "frequencia": 2
+}
