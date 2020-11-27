@@ -10,10 +10,11 @@ public interface IMateriaService {
 
     public  Boolean excluir(final Long id);
 
-    public MateriaEntity consultarMateria(final Long id);
+    public MateriaEntity consultar(final Long id);
 
-    public List<MateriaEntity> listarMateria();
+    public List<MateriaEntity> listar();
 
-    public Boolean cadastrarMateria(final MateriaEntity materiaEntity);
+    public Boolean cadastrar(final MateriaEntity materiaEntity);
+
 
 }

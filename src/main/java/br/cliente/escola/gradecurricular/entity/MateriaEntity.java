@@ -15,7 +15,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
-@Table(name = "tb_materia")
+@Table(name = "tb_materia") // cria a tablea
 @Data
 @NoArgsConstructor
 public class MateriaEntity implements Serializable { // tranforma em sequencia de bites, conserva com segurnça o que é escrito aqui
@@ -24,7 +24,7 @@ public class MateriaEntity implements Serializable { // tranforma em sequencia d
 
     @JsonInclude(Include.NON_NULL)
     @Id
-    @GeneratedValue(generator = "increment")  // especifica a regra, a responsabilidade não é do cliente e sim do banco
+    @GeneratedValue(generator = "increment")  // especifica a regra, a responsabilidade não é do cliente e sim do banco, oracle não tem autoincrement, procurar
     @GenericGenerator(name = "increment", strategy = "increment") // qual a estrategia = 1,2,3,4 sequencial
     @Column(name = "id")
     private Long id;

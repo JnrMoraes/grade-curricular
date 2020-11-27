@@ -27,9 +27,6 @@ import java.util.List;
 public class MateriaController {
 
     @Autowired
-    private IMateriaRepository iMateriaRepository;
-
-    @Autowired
     private IMateriaService materiaService;
 
 //    @GetMapping("/")
@@ -39,12 +36,12 @@ public class MateriaController {
 
     @GetMapping
     public ResponseEntity<List<MateriaEntity>> listarMateria(){
-        return ResponseEntity.status(HttpStatus.OK).body(this.iMateriaRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(this.materiaService.listar());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MateriaEntity> consultarMateria(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(this.iMateriaRepository.findById(id).get()); // chamo o Optiona e depois dou um get nele, ver o Sonar
+        return ResponseEntity.status(HttpStatus.OK).body(this.materiaService.consultar(id));
     }
 
     @DeleteMapping("/{id}")
@@ -54,14 +51,13 @@ public class MateriaController {
 
     @PostMapping
     public ResponseEntity<Boolean> cadastrarMateria(@RequestBody MateriaEntity materiaEntity){ // json, corpo para o webservice
-        try{
-            this.iMateriaRepository.save(materiaEntity);
-            return ResponseEntity.status(HttpStatus.OK).body(true);
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.OK).body(false);
+//        try{
+//            this.iMateriaRepository.save(materiaEntity);
+//            return ResponseEntity.status(HttpStatus.OK).body(true);
+//        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.materiaService.cadastrar(materiaEntity));
         }
-
-    }
+//    }
 
     @PutMapping ResponseEntity<Boolean> atualizarMateria(@RequestBody MateriaEntity materiaEntity){
             return ResponseEntity.status(HttpStatus.OK).body(this.materiaService.atualizar(materiaEntity));
